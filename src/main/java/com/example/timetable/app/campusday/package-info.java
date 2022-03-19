@@ -1,0 +1,1 @@
+package com.example.timetable.app.campusday;
