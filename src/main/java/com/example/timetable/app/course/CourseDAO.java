@@ -56,7 +56,7 @@ public class CourseDAO {
 	    
 		
 		 public List<CourseBean> fetchAllCourses() throws SQLException {
-		        final String selectSQL = "SELECT course_id,course_name,course_desc,course_department_id	 FROM course where not course_status_id = 2";
+		        final String selectSQL = "SELECT course_id,course_name,course_desc,course_department_id, department_name	 FROM course,department  where not course_status_id = 2 and  course_department_id =department_id  ";
 		        final List<CourseBean>courseList = new ArrayList<CourseBean>();
 		        try {
 		            this.conn = this.dataSource.getConnection();
@@ -67,6 +67,7 @@ public class CourseDAO {
 		               course.setCourseId(rs.getInt("course_id"));
 		                
 		               course.setCourseName(rs.getString("course_name"));
+						course.setDepartmentName(rs.getString("department_name"));
 		               course.setCourseDepartmentId(rs.getInt("course_department_id"));
 		               course.setCourseDesc(rs.getString("course_desc"));
 		               

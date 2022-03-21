@@ -2,7 +2,18 @@ package com.example.timetable.app.course;
 
 public class CourseBean {
 private int courseId, courseDepartmentId;
-private String courseName, courseDesc;
+private String courseName;
+	private String courseDesc;
+
+	public String getDepartmentName() {
+		return departmentName;
+	}
+
+	public void setDepartmentName(String departmentName) {
+		this.departmentName = departmentName;
+	}
+
+	private String departmentName;
 public CourseBean() {
 	super();
 	// TODO Auto-generated constructor stub
@@ -12,13 +23,14 @@ public CourseBean() {
 		this.courseId = courseId;
 	}
 
-	public CourseBean(int courseId, int courseDepartmentId, String courseName, String courseDesc) {
+	public CourseBean(int courseId, int courseDepartmentId, String courseName, String courseDesc, String departmentName) {
 	super();
 	this.courseId = courseId;
 	this.courseDepartmentId = courseDepartmentId;
 	this.courseName = courseName;
 	this.courseDesc = courseDesc;
-}
+		this.departmentName = departmentName;
+	}
 public int getCourseId() {
 	return courseId;
 }

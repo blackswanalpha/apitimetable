@@ -57,7 +57,7 @@ public class UnitDAO {
 	    
 		
 		 public List<UnitBean> fetchAllUnits() throws SQLException {
-		        final String selectSQL = "SELECT unit_id,unit_name,unit_desc,unit_code,unit_course_id,unit_specialization_id ,unit_requireS_lab		 FROM unit where not  unit_status_id = 2 ";
+		        final String selectSQL = "SELECT unit_id,unit_name,unit_desc,unit_code,unit_course_id,unit_specialization_id ,unit_requireS_lab,course_name,specialization_name		 FROM unit,course,specialization  where not  unit_status_id = 2 and unit_course_id = course_id and unit_specialization_id = specialization_id ";
 		        final List<UnitBean> unitList = new ArrayList<UnitBean>();
 		        try {
 		            this.conn = this.dataSource.getConnection();
@@ -70,6 +70,8 @@ public class UnitDAO {
 		                unit.setUnitName(rs.getString("unit_name"));
 		                unit.setUnitDesc(rs.getString("unit_desc"));
 		                unit.setUnitCode(rs.getString("unit_code"));
+						unit.setSpecializationName(rs.getString("specialization_name"));
+						unit.setCourseName(rs.getString("course_name"));
 		                unit.setUnitRequireLab(rs.getString("unit_requires_lab"));
 	             
 		                unit.setUnitCourseId(rs.getInt("unit_course_id"));

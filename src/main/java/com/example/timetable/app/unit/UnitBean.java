@@ -3,7 +3,32 @@ package com.example.timetable.app.unit;
 public class UnitBean {
 	private int unitId,unitCourseId,unitSpecializationId;
 	
-	private String unitCode,unitName,unitDesc,unitRequireLab;
+	private String unitCode;
+	private String unitName;
+	private String unitDesc;
+	private String unitRequireLab;
+	private String SpecializationName;
+
+	public String getSpecializationName() {
+		return SpecializationName;
+	}
+
+	public void setSpecializationName(String specializationName) {
+		SpecializationName = specializationName;
+	}
+
+
+
+	public String getCourseName() {
+		return courseName;
+	}
+
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
+	}
+
+	private String courseName;
+
 
 	public UnitBean() {
 		super();
@@ -15,7 +40,7 @@ public class UnitBean {
 	}
 
 	public UnitBean(int unitId, int unitCourseId, int unitSpecializationId, String unitCode, String unitName,
-					String unitDesc) {
+					String unitDesc, String specializationName, String courseName) {
 		super();
 		this.unitId = unitId;
 		this.unitCourseId = unitCourseId;
@@ -23,6 +48,8 @@ public class UnitBean {
 		this.unitCode = unitCode;
 		this.unitName = unitName;
 		this.unitDesc = unitDesc;
+		SpecializationName = specializationName;
+		this.courseName = courseName;
 	}
 
 	public int getUnitId() {
