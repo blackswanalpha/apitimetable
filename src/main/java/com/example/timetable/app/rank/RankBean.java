@@ -1,49 +1,38 @@
 package com.example.timetable.app.rank;
 
 public class RankBean {
-	private long rank_id;
-	
-
-	private String rank_status;
-
+	private int rankId;
 
 	public RankBean() {
 		super();
+	}
+
+	public int getRankId() {
+		return rankId;
+	}
+
+	public void setRankId(int rankId) {
+		this.rankId = rankId;
+	}
+
+	public String getRankStatus() {
+		return rankStatus;
+	}
+
+	public void setRankStatus(String rankStatus) {
+		this.rankStatus = rankStatus;
+	}
+
+	private String rankStatus;
+
+
+	public RankBean(int rankId, String rankStatus) {
+		super();
+		this.rankId = rankId;
 		// TODO Auto-generated constructor stub
+		this.rankStatus = rankStatus;
 	}
 
 
-	public RankBean(String rANK_STATUS) {
-		super();
-		rank_status = rANK_STATUS;
-	}
 
-
-	public RankBean(long rank_id, String rANK_STATUS) {
-		super();
-		this.rank_id = rank_id;
-		rank_status = rANK_STATUS;
-	}
-
-
-	public long getrank_id() {
-		return rank_id;
-	}
-
-
-	public void setrank_id(long iD) {
-		rank_id = iD;
-	}
-
-
-	public String getrank_status() {
-		return rank_status;
-	}
-
-
-	public void setrank_status(String rANK_STATUS) {
-		rank_status = rANK_STATUS;
-	}
-
-		
 }

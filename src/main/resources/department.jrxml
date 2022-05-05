@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.19.0.final using JasperReports Library version 6.19.0-646c68931cebf1a58bc65c4359d1f0ca223c5e94  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="department" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="df013db5-f76e-44d3-b0df-bcbc46d93160">
+    <property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+    <property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sample DB"/>
+    <style name="Title" fontName="Times New Roman" fontSize="50" isBold="true"/>
+    <style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+    <style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+    <style name="Detail" fontName="Arial" fontSize="12"/>
+    <style name="Row" mode="Transparent">
+        <conditionalStyle>
+            <conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+            <style backcolor="#E6DAC3"/>
+        </conditionalStyle>
+    </style>
+
+    <field name="departmentId" class="java.lang.Integer">
+
+    </field>
+    <field name="departmentName" class="java.lang.String">
+
+    </field>
+    <field name="departmentEmail" class="java.lang.String">
+
+    </field>
+    <field name="departmentDesc" class="java.lang.String">
+
+    </field>
+    <field name="facultyName" class="java.lang.String">
+
+    </field>
+    <field name="departmentMobile" class="java.lang.Integer">
+
+    </field>
+    <background>
+        <band splitType="Stretch"/>
+    </background>
+    <title>
+        <band height="136" splitType="Stretch">
+            <image>
+                <reportElement x="130" y="-20" width="164" height="126" uuid="1c003177-754c-448f-8ce1-16868856f545">
+                    <property name="net.sf.jasperreports.export.xls.auto.filter" value="Start"/>
+                </reportElement>
+
+                <imageExpression><![CDATA["stpauls.png"]]></imageExpression>
+            </image>
+            <staticText>
+                <reportElement style="Title" x="270" y="0" width="330" height="62" uuid="bc1ce1da-8232-46ea-be55-cec4abb986dd">
+                    <property name="net.sf.jasperreports.export.xls.auto.filter" value="Start"/>
+                </reportElement>
+
+                <textElement verticalAlignment="Middle"/>
+                <text><![CDATA[TIMETABLE]]></text>
+            </staticText>
+            <staticText>
+                <reportElement style="SubTitle" x="303" y="62" width="196" height="22" uuid="f6a78448-8260-4445-a9e0-e3fb53b080d9">
+                    <property name="net.sf.jasperreports.export.xls.auto.filter" value="Start"/>
+                </reportElement>
+
+                <textElement>
+                    <font fontName="Times New Roman"/>
+                </textElement>
+                <text><![CDATA[Department report]]></text>
+            </staticText>
+        </band>
+    </title>
+    <pageHeader>
+        <band splitType="Stretch"/>
+    </pageHeader>
+    <columnHeader>
+        <band height="16" splitType="Stretch">
+            <line>
+                <reportElement positionType="FixRelativeToBottom" x="0" y="15" width="802" height="1" uuid="e9d2002a-c8ee-4649-a258-640dad29110c"/>
+                <graphicElement>
+                    <pen lineWidth="0.5" lineColor="#999999"/>
+                </graphicElement>
+            </line>
+            <staticText>
+                <reportElement style="Column header" x="0" y="0" width="133" height="15" forecolor="#736343" uuid="f058aa6c-7e3e-4dc0-85cb-52cae465781c">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="82e51a45-5d84-4672-8c62-97f858dce042"/>
+                    <property name="net.sf.jasperreports.export.xls.auto.filter" value="Start"/>
+                </reportElement>
+                <text><![CDATA[ID]]></text>
+            </staticText>
+            <staticText>
+                <reportElement style="Column header" x="133" y="0" width="133" height="15" forecolor="#736343" uuid="9ef2b24a-363a-4194-bc06-164b7ba39763">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="77e9f792-fdb7-4a3c-bf51-9fbcc9a0b6d6"/>
+                    <property name="net.sf.jasperreports.export.xls.auto.filter" value="Start"/>
+                </reportElement>
+                <text><![CDATA[NAME]]></text>
+            </staticText>
+            <staticText>
+                <reportElement style="Column header" x="266" y="0" width="133" height="15" forecolor="#736343" uuid="e10e280d-d585-4a5c-9a94-7b1d16ea0b25">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="654546b5-4ccb-4607-8423-dfca53e08917"/>
+                    <property name="net.sf.jasperreports.export.xls.auto.filter" value="Start"/>
+                </reportElement>
+                <text><![CDATA[DESCRIPTION]]></text>
+            </staticText>
+            <staticText>
+                <reportElement style="Column header" x="399" y="0" width="133" height="15" forecolor="#736343" uuid="483621d5-0b0b-4e99-8754-66bfa23abae7">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="aa5c41b8-868b-4978-b3dc-ea63b4ca4cf0"/>
+                    <property name="net.sf.jasperreports.export.xls.auto.filter" value="Start"/>
+                </reportElement>
+                <text><![CDATA[MOBILE]]></text>
+            </staticText>
+            <staticText>
+                <reportElement style="Column header" x="532" y="0" width="133" height="15" forecolor="#736343" uuid="a084d1e2-280d-402a-892d-ab76ad0ad80b">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="db89107c-8f94-48a4-9d63-d1c35858281c"/>
+                    <property name="net.sf.jasperreports.export.xls.auto.filter" value="Start"/>
+                </reportElement>
+                <text><![CDATA[EMAIL]]></text>
+            </staticText>
+            <staticText>
+                <reportElement style="Column header" x="665" y="0" width="133" height="15" forecolor="#736343" uuid="65b04498-9d2b-4e32-a4fb-bf2d23c495b3">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f61e0a23-bfc0-4f96-9e97-388afa914921"/>
+                    <property name="net.sf.jasperreports.export.xls.auto.filter" value="Start"/>
+                </reportElement>
+                <text><![CDATA[FACULTY]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+    <detail>
+        <band height="15" splitType="Stretch">
+            <frame>
+                <reportElement style="Row" mode="Opaque" x="0" y="0" width="802" height="15" uuid="fa7cec56-4ec1-48e6-a26e-7266a995d174"/>
+                <textField >
+                    <reportElement style="Detail" x="0" y="0" width="133" height="15" uuid="ee4ff94e-7304-4ee6-947c-5652d874100a">
+                        <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="82e51a45-5d84-4672-8c62-97f858dce042"/>
+                        <property name="net.sf.jasperreports.export.xls.auto.filter" value="Start"/>
+                    </reportElement>
+                    <textFieldExpression><![CDATA[$F{departmentId}]]></textFieldExpression>
+                </textField>
+                <textField >
+                    <reportElement style="Detail" x="133" y="0" width="133" height="15" uuid="9e525edb-1b4b-4ad1-817d-4cb620264826">
+                        <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="77e9f792-fdb7-4a3c-bf51-9fbcc9a0b6d6"/>
+                        <property name="net.sf.jasperreports.export.xls.auto.filter" value="Start"/>
+                    </reportElement>
+                    <textFieldExpression><![CDATA[$F{departmentName}]]></textFieldExpression>
+                </textField>
+                <textField >
+                    <reportElement style="Detail" x="266" y="0" width="133" height="15" uuid="02c90bb5-813a-4e7d-9e5e-15b5444a7072">
+                        <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="654546b5-4ccb-4607-8423-dfca53e08917"/>
+                        <property name="net.sf.jasperreports.export.xls.auto.filter" value="Start"/>
+                    </reportElement>
+                    <textFieldExpression><![CDATA[$F{departmentDesc}]]></textFieldExpression>
+                </textField>
+                <textField >
+                    <reportElement style="Detail" x="399" y="0" width="133" height="15" uuid="140a9279-ac83-463c-89e6-572ca2f6b250">
+                        <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="aa5c41b8-868b-4978-b3dc-ea63b4ca4cf0"/>
+                        <property name="net.sf.jasperreports.export.xls.auto.filter" value="Start"/>
+                    </reportElement>
+                    <textFieldExpression><![CDATA[$F{departmentMobile}]]></textFieldExpression>
+                </textField>
+                <textField >
+                    <reportElement style="Detail" x="532" y="0" width="133" height="15" uuid="0a9b4f53-9197-4184-80b3-ba4b9846e784">
+                        <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="db89107c-8f94-48a4-9d63-d1c35858281c"/>
+                        <property name="net.sf.jasperreports.export.xls.auto.filter" value="Start"/>
+                    </reportElement>
+                    <textFieldExpression><![CDATA[$F{departmentEmail}]]></textFieldExpression>
+                </textField>
+                <textField >
+                    <reportElement style="Detail" x="665" y="0" width="133" height="15" uuid="d82d9712-d046-40f3-89ba-890c53b6f982">
+                        <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f61e0a23-bfc0-4f96-9e97-388afa914921"/>
+                        <property name="net.sf.jasperreports.export.xls.auto.filter" value="Start"/>
+                    </reportElement>
+                    <textFieldExpression><![CDATA[$F{facultyName}]]></textFieldExpression>
+                </textField>
+            </frame>
+        </band>
+    </detail>
+    <columnFooter>
+        <band height="6" splitType="Stretch">
+            <line>
+                <reportElement positionType="FixRelativeToBottom" x="0" y="3" width="802" height="1" uuid="fa5e88d5-a011-4e32-8f12-ce923f903111"/>
+                <graphicElement>
+                    <pen lineWidth="0.5" lineColor="#999999"/>
+                </graphicElement>
+            </line>
+        </band>
+    </columnFooter>
+    <pageFooter>
+        <band height="25" splitType="Stretch">
+            <frame>
+                <reportElement mode="Opaque" x="-21" y="1" width="843" height="24" forecolor="#D0B48E" backcolor="#F2EBDF" uuid="5d8169bd-4a75-48c8-8a68-6d3ad5ba9402"/>
+                <textField evaluationTime="Report">
+                    <reportElement style="Column header" x="783" y="1" width="40" height="20" forecolor="#736343" uuid="e5e27efa-b599-499b-9ca3-848cb511cb7b"/>
+                    <textElement verticalAlignment="Middle">
+                        <font size="10" isBold="false"/>
+                    </textElement>
+                    <textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+                </textField>
+                <textField>
+                    <reportElement style="Column header" x="703" y="1" width="80" height="20" forecolor="#736343" uuid="18cfe1ca-f7d6-48b0-9827-28578b42a5e0"/>
+                    <textElement textAlignment="Right" verticalAlignment="Middle">
+                        <font size="10" isBold="false"/>
+                    </textElement>
+                    <textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+                </textField>
+                <textField pattern="EEEEE dd MMMMM yyyy">
+                    <reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343" uuid="fbce24bb-3cb1-44a3-8eec-8c067ddbe5b5"/>
+                    <textElement verticalAlignment="Middle">
+                        <font size="10" isBold="false"/>
+                    </textElement>
+                    <textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+                </textField>
+            </frame>
+        </band>
+    </pageFooter>
+    <summary>
+        <band splitType="Stretch"/>
+    </summary>
+</jasperReport>

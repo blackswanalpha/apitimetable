@@ -6,19 +6,32 @@ public class UserBean {
 
 
 
-	private String userFullName, userEmail, userimageUrl;
+	private String userFullName;
+
+	public String getLoginUserName() {
+		return loginUserName;
+	}
+
+	public void setLoginUserName(String loginUserName) {
+		this.loginUserName = loginUserName;
+	}
+
+	private String loginUserName;
+	private String userEmail;
+	private String userimageUrl;
 	public UserBean() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 	public UserBean(int userId, int userDepartmentId, int userMobile, int userLoginId, String userFullName,
-					String userEmail, String userimageUrl) {
+					String loginUserName, String userEmail, String userimageUrl) {
 		super();
 		this.userId = userId;
 		this.userDepartmentId = userDepartmentId;
 		this.userMobile = userMobile;
 		this.userLoginId = userLoginId;
 		this.userFullName = userFullName;
+		this.loginUserName = loginUserName;
 		this.userimageUrl = userimageUrl;
 		this.userEmail = userEmail;
 	}

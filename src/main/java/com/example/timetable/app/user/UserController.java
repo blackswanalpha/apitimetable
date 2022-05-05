@@ -3,12 +3,9 @@ package com.example.timetable.app.user;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.example.timetable.app.login.LoginBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -35,5 +32,10 @@ public class UserController {
 	    public List<UserBean> deleteUser(@RequestBody final UserBean  userBean) throws SQLException {
 	        return (List<UserBean>)this. userDAO.deleteUser( userBean);
 	    }
+
+	@RequestMapping(method = { RequestMethod.GET }, value = { "/findByUserName" })
+	public UserBean findByName(@RequestParam String userName) throws SQLException {
+		return this.userDAO.findByUserName(userName);
+	}
 	    
 }

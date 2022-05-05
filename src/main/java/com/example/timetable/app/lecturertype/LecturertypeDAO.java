@@ -56,7 +56,7 @@ public class LecturertypeDAO {
     
 	
 	 public List<LecturertypeBean> fetchAllLecturertypes() throws SQLException {
-	        final String selectSQL = "SELECT lecturer_type_id,lecturer_type_name,lecturer_type_desc,lecturer_type_max_no_of_lecturertypes	 FROM lecturer_type where not lecturer_type_status_id = 2";
+	        final String selectSQL = "SELECT lecturer_type_id,lecturer_type_name,lecturer_type_desc,lecturer_type_max_no_of_units	 FROM lecturer_type where not lecturer_type_status_id = 2";
 	        final List<LecturertypeBean> lecturertypeList = new ArrayList<LecturertypeBean>();
 	        try {
 	            this.conn = this.dataSource.getConnection();
@@ -68,7 +68,7 @@ public class LecturertypeDAO {
 	                
 	                lecturertype.setLecturertypeName(rs.getString("lecturer_type_name"));
 	                lecturertype.setLecturertypeDesc(rs.getString("lecturer_type_desc"));
-	                lecturertype.setLecturertypeMax(rs.getInt("lecturer_type_max_no_of_lecturertypes"));
+	                lecturertype.setLecturertypeMax(rs.getInt("lecturer_type_max_no_of_units"));
 	    	        
 	             
 	                
@@ -87,7 +87,7 @@ public class LecturertypeDAO {
 	        return lecturertypeList;
 	    }
 	    public List<LecturertypeBean> createLecturertype(final LecturertypeBean lecturertypeBean) throws SQLException {
-	        final String selectSQL = "INSERT INTO lecturer_type(lecturer_type_id,lecturer_type_name,lecturer_type_desc,lecturer_type_max_no_of_lecturertypes	) values(" + this.getNextPrimaryKey() + ", '" +  lecturertypeBean.getLecturertypeName() +  "', '" + lecturertypeBean.getLecturertypeDesc()+  "', " + lecturertypeBean.getLecturertypeMax() +   ");";
+	        final String selectSQL = "INSERT INTO lecturer_type(lecturer_type_id,lecturer_type_name,lecturer_type_desc,lecturer_type_max_no_of_units,lecturer_type_status_id 	) values(" + this.getNextPrimaryKey() + ", '" +  lecturertypeBean.getLecturertypeName() +  "', '" + lecturertypeBean.getLecturertypeDesc()+  "', " + lecturertypeBean.getLecturertypeMax() +   ",1);";
 	        List<LecturertypeBean> lecturertypeList = new ArrayList<LecturertypeBean>();
 	        try {
 	            this.conn = this.dataSource.getConnection();

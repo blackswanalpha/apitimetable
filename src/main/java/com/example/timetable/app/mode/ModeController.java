@@ -3,6 +3,7 @@ package com.example.timetable.app.mode;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.example.timetable.app.mode.ModeBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +39,10 @@ public class ModeController {
 	    public List<ModeBean> deleteMode(@RequestBody final ModeBean modeBean) throws SQLException {
 	        return (List<ModeBean>)this.modeDAO.deleteMode(modeBean);
 	    }
+	@RequestMapping(method = { RequestMethod.POST }, value = { "/undoMode" })
+	public List<ModeBean> undoMode(@RequestBody final ModeBean modeBean) throws SQLException {
+		return (List<ModeBean>)this.modeDAO.undoMode(modeBean);
+	}
 	    
 
 

@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import com.example.timetable.app.campusday.CampusdayBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -54,25 +55,27 @@ public class CampusdayDAO {
     
 	
 	 public List<CampusdayBean> fetchAllCampusdays() throws SQLException {
-	        final String selectSQL = "SELECT campusday_id,campusday_campus_id ,campusday_day_id ,campusday_timeslot_id ,campusday_mode_id	 FROM campusday";
+	        final String selectSQL = "SELECT campusday_id, campusday_campus_id , campusday_day_id , campusday_timeslot_id , campusday_mode_id	 FROM campusday where not campusday_status_id = 2";
 	        final List<CampusdayBean> campusdayList = new ArrayList<CampusdayBean>();
 	        try {
 	            this.conn = this.dataSource.getConnection();
-	            this.cst = this.conn.prepareStatement(selectSQL);
+	            this.cst = this.conn.prepareStatement(selectSQL, ResultSet.TYPE_SCROLL_SENSITIVE,
+						ResultSet.CONCUR_UPDATABLE);
 	            final ResultSet rs = this.cst.executeQuery();
-	            while (rs.next()) {
+				rs.first();
+
+	            do {
 	                final CampusdayBean campusday = new CampusdayBean();
 	                campusday.setCampusdayId(rs.getInt("campusday_id"));
-	                
-	                campusday.setCampusdayTimeslotId(rs.getInt("campusday_timeslot_id "));
-	                campusday.setCampusdayDayId(rs.getInt("campusday_day_id "));
+	                campusday.setCampusdayTimeslotId(rs.getInt("campusday_timeslot_id"));
+	                campusday.setCampusdayDayId(rs.getInt("campusday_day_id"));
 	                campusday.setCampusdayCampusId(rs.getInt("campusday_campus_id"));
 	                campusday.setCampusdayModeId(rs.getInt("campusday_mode_id"));
-	             
-	                
+
+					System.out.println(campusday);
 	               
 	                campusdayList.add(campusday);
-	            }
+	            }while (rs.next());
 	        }
 	        catch (Exception e) {
 	            e.printStackTrace();
@@ -85,7 +88,7 @@ public class CampusdayDAO {
 	        return campusdayList;
 	    }
 	    public List<CampusdayBean> createCampusday(final CampusdayBean campusdayBean) throws SQLException {
-	        final String selectSQL = "INSERT INTO campusday(campusday_id,campusday_day_id,campusday_timeslot_id,campusday_campus_id,campusday_mode_id) values(" + this.getNextPrimaryKey() + ", " +  campusdayBean.getCampusdayId() +  ", " + campusdayBean.getCampusdayTimeslotId()+  ", " + campusdayBean.getCampusdayCampusId()+  ", " + campusdayBean.getCampusdayModeId() +   ");";
+	        final String selectSQL = "INSERT INTO campusday(campusday_id,campusday_day_id,campusday_timeslot_id,campusday_campus_id,campusday_mode_id,campusday_status_id) values(" + this.getNextPrimaryKey() + ", " +  campusdayBean.getCampusdayDayId() +  ", " + campusdayBean.getCampusdayTimeslotId()+  ", " + campusdayBean.getCampusdayCampusId()+  ", " + campusdayBean.getCampusdayModeId() +   ",1);";
 	        List<CampusdayBean> campusdayList = new ArrayList<CampusdayBean>();
 	        try {
 	            this.conn = this.dataSource.getConnection();
@@ -120,23 +123,42 @@ public class CampusdayDAO {
 	        this.conn.close();
 	        return (List<CampusdayBean>)this.fetchAllCampusdays();
 	    }
-	    
-	    public List<CampusdayBean> deleteCampusday(final CampusdayBean campusdayBean) throws SQLException {
-	        final String sql = "DELETE FROM campusday WHERE campusday_id=" + campusdayBean.getCampusdayId();
-	        try {
-	            this.conn = this.dataSource.getConnection();
-	            (this.cst = this.conn.prepareStatement(sql)).execute();
-	        }
-	        catch (Exception e) {
-	            e.printStackTrace();
-	            return (List<CampusdayBean>)this.fetchAllCampusdays();
-	        }
-	        finally {
-	            this.conn.close();
-	        }
-	        this.conn.close();
-	        return (List<CampusdayBean>)this.fetchAllCampusdays();
-	    }
+
+	public List<CampusdayBean> deleteCampusday(final CampusdayBean campusdayBean) throws SQLException {
+		final String sql = "update campusday set campusday_status_id = 2  WHERE campusday_id=" + campusdayBean.getCampusdayId();
+		try {
+			this.conn = this.dataSource.getConnection();
+			(this.cst = this.conn.prepareStatement(sql)).execute();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return (List<CampusdayBean>)this.fetchAllCampusdays();
+		}
+		finally {
+			this.conn.close();
+		}
+		this.conn.close();
+		return (List<CampusdayBean>)this.fetchAllCampusdays();
+	}
+
+
+	public List<CampusdayBean> undoCampusday(CampusdayBean campusdayBean) throws SQLException {
+		final String sql = "update campusday set campusday_status_id = 1  WHERE campusday_id=" + campusdayBean.getCampusdayId();
+
+		try {
+			this.conn = this.dataSource.getConnection();
+			(this.cst = this.conn.prepareStatement(sql)).execute();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return (List<CampusdayBean>)this.fetchAllCampusdays();
+		}
+		finally {
+			this.conn.close();
+		}
+		this.conn.close();
+		return (List<CampusdayBean>)this.fetchAllCampusdays();
+	}
 
 
 }

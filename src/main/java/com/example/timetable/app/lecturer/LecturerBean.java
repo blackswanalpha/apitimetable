@@ -8,9 +8,14 @@ public class LecturerBean {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
+	public LecturerBean(int lecturerId) {
+		this.lecturerId = lecturerId;
+	}
+
 	public LecturerBean(int lecturerId, int lecturerContact, int lecturerLoginId, int lecturerStaffNo,
-			int lecturerTypeId, String lecturerName, String lecturerEmail, String lecturerImage, String lecturerGender,
-			String lecturerLocation, String lecturerActive) {
+						int lecturerTypeId, String lecturerName, String lecturerEmail, String lecturerImage, String lecturerGender,
+						String lecturerLocation, String lecturerActive) {
 		super();
 		this.lecturerId = lecturerId;
 		this.lecturerContact = lecturerContact;

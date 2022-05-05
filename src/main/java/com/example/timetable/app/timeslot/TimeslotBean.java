@@ -2,20 +2,51 @@ package com.example.timetable.app.timeslot;
 
 public class TimeslotBean {
 private int timeslotId, timeslotCampusId,timeslotModeId;
-private String timeslotName,timeslotDesc;
+private String timeslotName;
+	private String timeslotDesc;
+
+	public String getCampusName() {
+		return campusName;
+	}
+
+	public void setCampusName(String campusName) {
+		this.campusName = campusName;
+	}
+
+	public String getModeName() {
+		return modeName;
+	}
+
+	public void setModeName(String modeName) {
+		this.modeName = modeName;
+	}
+
+	private String campusName;
+	private String modeName;
+
+
+
+
 public TimeslotBean() {
 	super();
 	// TODO Auto-generated constructor stub
 }
-public TimeslotBean(int timeslotId, int timeslotCampusId, int timeslotModeId, String timeslotName,
-		String timeslotDesc) {
+
+	public TimeslotBean(int timeslotId) {
+		this.timeslotId = timeslotId;
+	}
+
+	public TimeslotBean(int timeslotId, int timeslotCampusId, int timeslotModeId, String timeslotName,
+						String timeslotDesc, String campusName, String modeName) {
 	super();
 	this.timeslotId = timeslotId;
 	this.timeslotCampusId = timeslotCampusId;
 	this.timeslotModeId = timeslotModeId;
 	this.timeslotName = timeslotName;
 	this.timeslotDesc = timeslotDesc;
-}
+		this.campusName = campusName;
+		this.modeName = modeName;
+	}
 public int getTimeslotId() {
 	return timeslotId;
 }

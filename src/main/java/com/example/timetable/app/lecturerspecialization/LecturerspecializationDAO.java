@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import com.example.timetable.app.lecturerspecialization.LecturerspecializationBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -120,23 +121,41 @@ public class LecturerspecializationDAO {
 		        this.conn.close();
 		        return (List<LecturerspecializationBean>)this.fetchAllLecturerspecializations();
 		    }
-		    
-		    public List<LecturerspecializationBean> deleteLecturerspecialization(final LecturerspecializationBean lecturerspecializationBean) throws SQLException {
-		        final String sql = "DELETE FROM lecturer_specialization WHERE lecturerspecialization_id=" + lecturerspecializationBean.getLecturerspecializationId();
-		        try {
-		            this.conn = this.dataSource.getConnection();
-		            (this.cst = this.conn.prepareStatement(sql)).execute();
-		        }
-		        catch (Exception e) {
-		            e.printStackTrace();
-		            return (List<LecturerspecializationBean>)this.fetchAllLecturerspecializations();
-		        }
-		        finally {
-		            this.conn.close();
-		        }
-		        this.conn.close();
-		        return (List<LecturerspecializationBean>)this.fetchAllLecturerspecializations();
-		    }
+
+	public List<LecturerspecializationBean> deleteLecturerspecialization(final LecturerspecializationBean lecturerspecializationBean) throws SQLException {
+		final String sql = "update lecturerspecialization set lecturerspecialization_status_id = 2  WHERE lecturerspecialization_id=" +lecturerspecializationBean.getLecturerspecializationId();
+		try {
+			this.conn = this.dataSource.getConnection();
+			(this.cst = this.conn.prepareStatement(sql)).execute();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return (List<LecturerspecializationBean>)this.fetchAllLecturerspecializations();
+		}
+		finally {
+			this.conn.close();
+		}
+		this.conn.close();
+		return (List<LecturerspecializationBean>)this.fetchAllLecturerspecializations();
+	}
+
+	public List<LecturerspecializationBean> undoLecturerspecialization(LecturerspecializationBean lecturerspecializationBean) throws SQLException {
+		final String sql = "update lecturerspecialization set lecturerspecialization_status_id = 1  WHERE lecturerspecialization_id=" + lecturerspecializationBean.getLecturerspecializationId();
+
+		try {
+			this.conn = this.dataSource.getConnection();
+			(this.cst = this.conn.prepareStatement(sql)).execute();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return (List<LecturerspecializationBean>)this.fetchAllLecturerspecializations();
+		}
+		finally {
+			this.conn.close();
+		}
+		this.conn.close();
+		return (List<LecturerspecializationBean>)this.fetchAllLecturerspecializations();
+	}
 
 }
 

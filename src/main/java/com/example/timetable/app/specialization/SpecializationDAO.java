@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import com.example.timetable.app.specialization.SpecializationBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -55,7 +56,7 @@ public class SpecializationDAO {
 	    
 		
 		 public List<SpecializationBean> fetchAllSpecializations() throws SQLException {
-		        final String selectSQL = "SELECT specialization_id,specialization_name,specialization_desc	 FROM specialization";
+		        final String selectSQL = "SELECT specialization_id,specialization_name,specialization_desc	 FROM specialization  where not  specialization_status_id = 2";
 		        final List<SpecializationBean> specializationList = new ArrayList<SpecializationBean>();
 		        try {
 		            this.conn = this.dataSource.getConnection();
@@ -85,7 +86,7 @@ public class SpecializationDAO {
 		        return specializationList;
 		    }
 		    public List<SpecializationBean> createSpecialization(final SpecializationBean specializationBean) throws SQLException {
-		        final String selectSQL = "INSERT INTO specialization(specialization_id,specialization_name,specialization_desc) values(" + this.getNextPrimaryKey() + ", '" +  specializationBean.getSpecializationName() +  "', '" + specializationBean.getSpecializationDesc() +   "');";
+		        final String selectSQL = "INSERT INTO specialization(specialization_id,specialization_name,specialization_desc,specialization_status_id) values(" + this.getNextPrimaryKey() + ", '" +  specializationBean.getSpecializationName() +  "', '" + specializationBean.getSpecializationDesc() +   "',1);";
 		        List<SpecializationBean> specializationList = new ArrayList<SpecializationBean>();
 		        try {
 		            this.conn = this.dataSource.getConnection();
@@ -120,22 +121,42 @@ public class SpecializationDAO {
 		        this.conn.close();
 		        return (List<SpecializationBean>)this.fetchAllSpecializations();
 		    }
-		    
-		    public List<SpecializationBean> deleteSpecialization(final SpecializationBean specializationBean) throws SQLException {
-		        final String sql = "DELETE FROM specialization WHERE specialization_id=" + specializationBean.getSpecializationId();
-		        try {
-		            this.conn = this.dataSource.getConnection();
-		            (this.cst = this.conn.prepareStatement(sql)).execute();
-		        }
-		        catch (Exception e) {
-		            e.printStackTrace();
-		            return (List<SpecializationBean>)this.fetchAllSpecializations();
-		        }
-		        finally {
-		            this.conn.close();
-		        }
-		        this.conn.close();
-		        return (List<SpecializationBean>)this.fetchAllSpecializations();
-		    }
+
+
+	public List<SpecializationBean> deleteSpecialization(final SpecializationBean specializationBean) throws SQLException {
+		final String sql = "update specialization set specialization_status_id = 2  WHERE specialization_id=" + specializationBean.getSpecializationId();
+		try {
+			this.conn = this.dataSource.getConnection();
+			(this.cst = this.conn.prepareStatement(sql)).execute();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return (List<SpecializationBean>)this.fetchAllSpecializations();
+		}
+		finally {
+			this.conn.close();
+		}
+		this.conn.close();
+		return (List<SpecializationBean>)this.fetchAllSpecializations();
+	}
+
+
+	public List<SpecializationBean> undoSpecialization(SpecializationBean specializationBean) throws SQLException {
+		final String sql = "update specialization set specialization_status_id = 1  WHERE specialization_id=" + specializationBean.getSpecializationId();
+
+		try {
+			this.conn = this.dataSource.getConnection();
+			(this.cst = this.conn.prepareStatement(sql)).execute();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return (List<SpecializationBean>)this.fetchAllSpecializations();
+		}
+		finally {
+			this.conn.close();
+		}
+		this.conn.close();
+		return (List<SpecializationBean>)this.fetchAllSpecializations();
+	}
 
 }

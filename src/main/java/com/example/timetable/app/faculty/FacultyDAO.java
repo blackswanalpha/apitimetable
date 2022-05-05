@@ -62,7 +62,7 @@ public class FacultyDAO {
 	    
 		
 		 public List<FacultyBean> fetchAllFacultys() throws SQLException {
-		        final String selectSQL = "SELECT faculty_id,faculty_name,faculty_desc,faculty_email,faculty_mobile,faculty_institution_id	 FROM faculty where not faculty_status_id = 2";
+		        final String selectSQL = "SELECT faculty_id,faculty_name,faculty_desc,faculty_email,faculty_mobile,faculty_institution_id,institution_name	 FROM faculty,institution where not faculty_status_id = 2 and faculty_institution_id = institution_id ";
 		        final List<FacultyBean> facultyList = new ArrayList<FacultyBean>();
 		        try {
 		            this.conn = this.dataSource.getConnection();
@@ -75,7 +75,7 @@ public class FacultyDAO {
 		                faculty.setFacultyName(rs.getString("faculty_name"));
 		                faculty.setFacultyDesc(rs.getString("faculty_desc"));
 		                faculty.setFacultyEmail(rs.getString("faculty_email"));
-
+						faculty.setInstitutionName(rs.getString("institution_name"));
 
 						faculty.setFacultyInstitutionId(rs.getInt("faculty_institution_id"));
 		                faculty.setFacultyMobile(rs.getInt("faculty_mobile"));

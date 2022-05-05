@@ -7,7 +7,12 @@ public SpecializationBean() {
 	super();
 	// TODO Auto-generated constructor stub
 }
-public SpecializationBean(int specializationId, String specializationName, String specializationDesc) {
+
+	public SpecializationBean(int specializationId) {
+		this.specializationId = specializationId;
+	}
+
+	public SpecializationBean(int specializationId, String specializationName, String specializationDesc) {
 	super();
 	this.specializationId = specializationId;
 	this.specializationName = specializationName;

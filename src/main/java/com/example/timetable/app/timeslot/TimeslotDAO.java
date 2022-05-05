@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import com.example.timetable.app.timeslot.TimeslotBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -54,7 +55,7 @@ public class TimeslotDAO {
     
 	
 	 public List<TimeslotBean> fetchAllTimeslots() throws SQLException {
-	        final String selectSQL = "SELECT timeslot_id,timeslot_name,timeslot_desc,timeslot_campus_id,timeslot_mode_id	 FROM timeslot";
+	        final String selectSQL = "SELECT timeslot_id,timeslot_name,timeslot_desc,timeslot_campus_id,timeslot_mode_id,campus_name,mode_name	 FROM timeslot,campus,mode where not  timeslot_status_id = 2 and timeslot_mode_id=mode_id and timeslot_mode_id =mode_id ";
 	        final List<TimeslotBean> timeslotList = new ArrayList<TimeslotBean>();
 	        try {
 	            this.conn = this.dataSource.getConnection();
@@ -66,6 +67,8 @@ public class TimeslotDAO {
 	                
 	                timeslot.setTimeslotName(rs.getString("timeslot_name"));
 	                timeslot.setTimeslotDesc(rs.getString("timeslot_desc"));
+					timeslot.setCampusName(rs.getString("campus_name"));
+					timeslot.setModeName(rs.getString("mode_name"));
 	                timeslot.setTimeslotCampusId(rs.getInt("timeslot_campus_id"));
 	                timeslot.setTimeslotModeId(rs.getInt("timeslot_mode_id"));
 	             
@@ -85,7 +88,7 @@ public class TimeslotDAO {
 	        return timeslotList;
 	    }
 	    public List<TimeslotBean> createTimeslot(final TimeslotBean timeslotBean) throws SQLException {
-	        final String selectSQL = "INSERT INTO timeslot(timeslot_id,timeslot_name,timeslot_desc,timeslot_campus_id,timeslot_mode_id		) values(" + this.getNextPrimaryKey() + ", '" +  timeslotBean.getTimeslotName() +  "', '" + timeslotBean.getTimeslotDesc()+  "', " + timeslotBean.getTimeslotCampusId()+  ", " + timeslotBean.getTimeslotModeId() +   ");";
+	        final String selectSQL = "INSERT INTO timeslot(timeslot_id,timeslot_name,timeslot_desc,timeslot_campus_id,timeslot_mode_id	,timeslot_status_id	) values(" + this.getNextPrimaryKey() + ", '" +  timeslotBean.getTimeslotName() +  "', '" + timeslotBean.getTimeslotDesc()+  "', " + timeslotBean.getTimeslotCampusId()+  ", " + timeslotBean.getTimeslotModeId() +   ",1);";
 	        List<TimeslotBean> timeslotList = new ArrayList<TimeslotBean>();
 	        try {
 	            this.conn = this.dataSource.getConnection();
@@ -120,23 +123,42 @@ public class TimeslotDAO {
 	        this.conn.close();
 	        return (List<TimeslotBean>)this.fetchAllTimeslots();
 	    }
-	    
-	    public List<TimeslotBean> deleteTimeslot(final TimeslotBean timeslotBean) throws SQLException {
-	        final String sql = "DELETE FROM timeslot WHERE timeslot_id=" + timeslotBean.getTimeslotId();
-	        try {
-	            this.conn = this.dataSource.getConnection();
-	            (this.cst = this.conn.prepareStatement(sql)).execute();
-	        }
-	        catch (Exception e) {
-	            e.printStackTrace();
-	            return (List<TimeslotBean>)this.fetchAllTimeslots();
-	        }
-	        finally {
-	            this.conn.close();
-	        }
-	        this.conn.close();
-	        return (List<TimeslotBean>)this.fetchAllTimeslots();
-	    }
+
+	public List<TimeslotBean> deleteTimeslot(final TimeslotBean timeslotBean) throws SQLException {
+		final String sql = "update timeslot set timeslot_status_id = 2  WHERE timeslot_id=" + timeslotBean.getTimeslotId();
+		try {
+			this.conn = this.dataSource.getConnection();
+			(this.cst = this.conn.prepareStatement(sql)).execute();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return (List<TimeslotBean>)this.fetchAllTimeslots();
+		}
+		finally {
+			this.conn.close();
+		}
+		this.conn.close();
+		return (List<TimeslotBean>)this.fetchAllTimeslots();
+	}
+
+
+	public List<TimeslotBean> undoTimeslot(TimeslotBean timeslotBean) throws SQLException {
+		final String sql = "update timeslot set timeslot_status_id = 1  WHERE timeslot_id=" + timeslotBean.getTimeslotId();
+
+		try {
+			this.conn = this.dataSource.getConnection();
+			(this.cst = this.conn.prepareStatement(sql)).execute();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return (List<TimeslotBean>)this.fetchAllTimeslots();
+		}
+		finally {
+			this.conn.close();
+		}
+		this.conn.close();
+		return (List<TimeslotBean>)this.fetchAllTimeslots();
+	}
 
 
 }

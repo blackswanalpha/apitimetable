@@ -2,7 +2,19 @@ package com.example.timetable.app.faculty;
 
 public class FacultyBean {
 	private int facultyId,facultyMobile, facultyInstitutionId;
-	private String facultyName,facultyEmail,facultyDesc;
+	private String facultyName;
+	private String facultyEmail;
+	private String facultyDesc;
+
+	public String getInstitutionName() {
+		return institutionName;
+	}
+
+	public void setInstitutionName(String institutionName) {
+		this.institutionName = institutionName;
+	}
+
+	private String institutionName;
 	public FacultyBean() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -13,13 +25,15 @@ public class FacultyBean {
 	}
 
 	public FacultyBean(int facultyId, int facultyMobile, int facultyInstitutionId, String facultyName,
-					   String facultyEmail) {
+					   String facultyEmail, String facultyInstitutionName, String institutionName) {
 		super();
 		this.facultyId = facultyId;
 		this.facultyMobile = facultyMobile;
 		this.facultyInstitutionId = facultyInstitutionId;
 		this.facultyName = facultyName;
 		this.facultyEmail = facultyEmail;
+		this.institutionName = institutionName;
+
 	}
 	public int getFacultyId() {
 		return facultyId;

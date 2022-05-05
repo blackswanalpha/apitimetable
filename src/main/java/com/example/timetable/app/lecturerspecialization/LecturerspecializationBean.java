@@ -8,8 +8,12 @@ public LecturerspecializationBean() {
 	// TODO Auto-generated constructor stub
 }
 
-public LecturerspecializationBean(int lecturerspecializationId, int lecturerspecializationLecturerId,
-		int lecturerspecializationSpecializationId) {
+	public LecturerspecializationBean(int lecturerspecializationId) {
+		this.lecturerspecializationId = lecturerspecializationId;
+	}
+
+	public LecturerspecializationBean(int lecturerspecializationId, int lecturerspecializationLecturerId,
+									  int lecturerspecializationSpecializationId) {
 	super();
 	this.lecturerspecializationId = lecturerspecializationId;
 	this.lecturerspecializationLecturerId = lecturerspecializationLecturerId;

@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import com.example.timetable.app.mode.ModeBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -56,7 +57,7 @@ public class ModeDAO {
     
 	
 	 public List<ModeBean> fetchAllModes() throws SQLException {
-	        final String selectSQL = "SELECT mode_id,mode_name,mode_desc	 FROM mode";
+	        final String selectSQL = "SELECT mode_id,mode_name,mode_desc	 FROM mode where not mode_status_id = 2";
 	        final List<ModeBean> modeList = new ArrayList<ModeBean>();
 	        try {
 	            this.conn = this.dataSource.getConnection();
@@ -86,7 +87,7 @@ public class ModeDAO {
 	        return modeList;
 	    }
 	    public List<ModeBean> createMode(final ModeBean modeBean) throws SQLException {
-	        final String selectSQL = "INSERT INTO mode(mode_id,mode_name,mode_desc) values(" + this.getNextPrimaryKey() + ", '" +  modeBean.getModeName() +  "', '" + modeBean.getModeDesc() +   "');";
+	        final String selectSQL = "INSERT INTO mode(mode_id,mode_name,mode_desc,mode_status_id) values(" + this.getNextPrimaryKey() + ", '" +  modeBean.getModeName() +  "', '" + modeBean.getModeDesc() +   "',1);";
 	        List<ModeBean> modeList = new ArrayList<ModeBean>();
 	        try {
 	            this.conn = this.dataSource.getConnection();
@@ -121,23 +122,40 @@ public class ModeDAO {
 	        this.conn.close();
 	        return (List<ModeBean>)this.fetchAllModes();
 	    }
-	    
-	    public List<ModeBean> deleteMode(final ModeBean modeBean) throws SQLException {
-	        final String sql = "DELETE FROM mode WHERE mode_id=" + modeBean.getModeId();
-	        try {
-	            this.conn = this.dataSource.getConnection();
-	            (this.cst = this.conn.prepareStatement(sql)).execute();
-	        }
-	        catch (Exception e) {
-	            e.printStackTrace();
-	            return (List<ModeBean>)this.fetchAllModes();
-	        }
-	        finally {
-	            this.conn.close();
-	        }
-	        this.conn.close();
-	        return (List<ModeBean>)this.fetchAllModes();
-	    }
 
+	public List<ModeBean> deleteMode(final ModeBean modeBean) throws SQLException {
+		final String sql = "update mode set mode_status_id = 2  WHERE mode_id=" +modeBean.getModeId();
+		try {
+			this.conn = this.dataSource.getConnection();
+			(this.cst = this.conn.prepareStatement(sql)).execute();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return (List<ModeBean>)this.fetchAllModes();
+		}
+		finally {
+			this.conn.close();
+		}
+		this.conn.close();
+		return (List<ModeBean>)this.fetchAllModes();
+	}
+
+	public List<ModeBean> undoMode(ModeBean modeBean) throws SQLException {
+		final String sql = "update mode set mode_status_id = 1  WHERE mode_id=" + modeBean.getModeId();
+
+		try {
+			this.conn = this.dataSource.getConnection();
+			(this.cst = this.conn.prepareStatement(sql)).execute();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return (List<ModeBean>)this.fetchAllModes();
+		}
+		finally {
+			this.conn.close();
+		}
+		this.conn.close();
+		return (List<ModeBean>)this.fetchAllModes();
+	}
 
 }

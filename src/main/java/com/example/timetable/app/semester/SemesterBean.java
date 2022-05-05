@@ -8,6 +8,8 @@ public class SemesterBean {
 		// TODO Auto-generated constructor stub
 	}
 
+
+
 	public SemesterBean(int semesterId) {
 		this.semesterId = semesterId;
 	}

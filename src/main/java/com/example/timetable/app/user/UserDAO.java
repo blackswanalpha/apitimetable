@@ -49,11 +49,49 @@ public class UserDAO {
 	        this.conn.close();
 	        return primary;
 	    }
-	    
-	    
-	    
-		
-		 public List<UserBean> fetchAllUsers() throws SQLException {
+
+
+
+	public  UserBean  findByUserName(String userName) throws SQLException {
+		final String selectSQL = "SELECT user_id,user_full_name,user_department_id,user_email,user_mobile,user_login_id,user_imageUrl,login_id,login_username	 FROM user,login where user_login_id =login_id and login_username =  '"+ userName+"'";
+//		final List<UserBean>userList = new ArrayList<UserBean>();
+		final UserBean user = new UserBean();
+		ResultSet rs = null;
+		try {
+			this.conn = this.dataSource.getConnection();
+			this.cst = this.conn.prepareStatement(selectSQL);
+		 rs = this.cst.executeQuery();
+			while (rs.next()) {
+
+				user.setUserId(rs.getInt("user_id"));
+
+				user.setUserFullName(rs.getString("user_full_name"));
+				user.setUserDepartmentId(rs.getInt("user_department_id"));
+				user.setUserEmail(rs.getString("user_email"));
+				user.setUserimageUrl(rs.getString("user_imageUrl"));
+				user.setLoginUserName(rs.getString("login_username"));
+				user.setUserMobile(rs.getInt("user_mobile"));
+				user.setUserLoginId(rs.getInt("user_login_id"));
+rs.close();
+
+
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return user;
+		}
+		finally {
+			this.conn.close();
+		}
+		this.conn.close();
+		return user;
+	}
+
+
+
+
+	public List<UserBean> fetchAllUsers() throws SQLException {
 		        final String selectSQL = "SELECT user_id,user_full_name,user_department_id,user_email,user_mobile,user_login_id,user_imageUrl	 FROM user";
 		        final List<UserBean>userList = new ArrayList<UserBean>();
 		        try {
@@ -86,8 +124,11 @@ public class UserDAO {
 		        this.conn.close();
 		        return userList;
 		    }
+
+
+
 		    public List<UserBean> createUser(final UserBean userBean) throws SQLException {
-		        final String selectSQL = "INSERT INTO user(user_id,user_full_name,user_department_id,user_email,user_mobile,user_login_id,user_imageUrl) values(" + this.getNextPrimaryKey() + ", '" + userBean.getUserFullName() +  "', " +userBean.getUserDepartmentId()+  ", '" +userBean.getUserEmail() +  "', "  +userBean.getUserMobile()+", "  +userBean.getUserLoginId()+  ", '" +userBean.getUserimageUrl()+ ");";
+		        final String selectSQL = "INSERT INTO user(user_id,user_full_name,user_department_id,user_email,user_mobile,user_login_id,user_imageUrl) values(" + this.getNextPrimaryKey() + ", '" + userBean.getUserFullName() +  "', " +userBean.getUserDepartmentId()+  ", '" +userBean.getUserEmail() +  "', "  +userBean.getUserMobile()+", "  +userBean.getUserLoginId()+  ",'https://bootdey.com/img/Content/avatar/avatar1.png');";
 		        List<UserBean>userList = new ArrayList<UserBean>();
 		        try {
 		            this.conn = this.dataSource.getConnection();

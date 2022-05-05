@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import com.example.timetable.app.semester.SemesterBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -54,7 +55,7 @@ public class SemesterDAO {
     
 	
 	 public List<SemesterBean> fetchAllSemesters() throws SQLException {
-	        final String selectSQL = "SELECT semester_id,semester_name,semester_year	 FROM semester";
+	        final String selectSQL = "SELECT semester_id,semester_name,semester_year	 FROM semester where not  semester_status_id = 2";
 	        final List<SemesterBean> semesterList = new ArrayList<SemesterBean>();
 	        try {
 	            this.conn = this.dataSource.getConnection();
@@ -84,7 +85,7 @@ public class SemesterDAO {
 	        return semesterList;
 	    }
 	    public List<SemesterBean> createSemester(final SemesterBean semesterBean) throws SQLException {
-	        final String selectSQL = "INSERT INTO semester(semester_id,semester_name,semester_year) values(" + this.getNextPrimaryKey() + ", '" +  semesterBean.getSemesterName() +  "', " + semesterBean.getSemesterYear() +   ");";
+	        final String selectSQL = "INSERT INTO semester(semester_id,semester_name,semester_year,semester_status_id) values(" + this.getNextPrimaryKey() + ", '" +  semesterBean.getSemesterName() +  "', " + semesterBean.getSemesterYear() +   ",1);";
 	        List<SemesterBean> semesterList = new ArrayList<SemesterBean>();
 	        try {
 	            this.conn = this.dataSource.getConnection();
@@ -119,22 +120,40 @@ public class SemesterDAO {
 	        this.conn.close();
 	        return (List<SemesterBean>)this.fetchAllSemesters();
 	    }
-	    
-	    public List<SemesterBean> deleteSemester(final SemesterBean semesterBean) throws SQLException {
-	        final String sql = "DELETE FROM semester WHERE semester_id=" + semesterBean.getSemesterId();
-	        try {
-	            this.conn = this.dataSource.getConnection();
-	            (this.cst = this.conn.prepareStatement(sql)).execute();
-	        }
-	        catch (Exception e) {
-	            e.printStackTrace();
-	            return (List<SemesterBean>)this.fetchAllSemesters();
-	        }
-	        finally {
-	            this.conn.close();
-	        }
-	        this.conn.close();
-	        return (List<SemesterBean>)this.fetchAllSemesters();
-	    }
 
+	public List<SemesterBean> deleteSemester(final SemesterBean semesterBean) throws SQLException {
+		final String sql = "update semester set semester_status_id = 2  WHERE semester_id=" + semesterBean.getSemesterId();
+		try {
+			this.conn = this.dataSource.getConnection();
+			(this.cst = this.conn.prepareStatement(sql)).execute();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return (List<SemesterBean>)this.fetchAllSemesters();
+		}
+		finally {
+			this.conn.close();
+		}
+		this.conn.close();
+		return (List<SemesterBean>)this.fetchAllSemesters();
+	}
+
+
+	public List<SemesterBean> undoSemester(SemesterBean semesterBean) throws SQLException {
+		final String sql = "update semester set semester_status_id = 1  WHERE semester_id=" + semesterBean.getSemesterId();
+
+		try {
+			this.conn = this.dataSource.getConnection();
+			(this.cst = this.conn.prepareStatement(sql)).execute();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return (List<SemesterBean>)this.fetchAllSemesters();
+		}
+		finally {
+			this.conn.close();
+		}
+		this.conn.close();
+		return (List<SemesterBean>)this.fetchAllSemesters();
+	}
 }

@@ -56,7 +56,7 @@ public class RoomDAO {
 	    
 		
 		 public List<RoomBean> fetchAllRooms() throws SQLException {
-		        final String selectSQL = "SELECT room_id,room_name,room_desc,room_capacity,room_building_id,room_department_id ,room_lab		 FROM room where not room_status_id = 2";
+		        final String selectSQL = "SELECT room_id,room_name,room_desc,room_capacity,room_building_id,room_department_id ,room_lab,building_name,department_name		 FROM room,building,department where not room_status_id = 2 and room_building_id=building_id and room_department_id=department_id ";
 		        final List<RoomBean> roomList = new ArrayList<RoomBean>();
 		        try {
 		            this.conn = this.dataSource.getConnection();
@@ -67,6 +67,9 @@ public class RoomDAO {
 		                room.setRoomId(rs.getInt("room_id"));
 		                
 		                room.setRoomName(rs.getString("room_name"));
+						room.setBuildingName(rs.getString("building_name"));
+						room.setDepartmentName(rs.getString("department_name"));
+
 		                room.setRoomDesc(rs.getString("room_desc"));
 		                room.setRoomCapacity(rs.getString("room_capacity"));
 		                room.setRoomLab(rs.getString("room_lab"));

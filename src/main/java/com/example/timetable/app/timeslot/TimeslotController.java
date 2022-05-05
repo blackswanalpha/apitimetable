@@ -3,6 +3,7 @@ package com.example.timetable.app.timeslot;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.example.timetable.app.timeslot.TimeslotBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,7 +35,10 @@ public class TimeslotController {
 	    public List<TimeslotBean> deleteTimeslot(@RequestBody final TimeslotBean timeslotBean) throws SQLException {
 	        return (List<TimeslotBean>)this.timeslotDAO.deleteTimeslot(timeslotBean);
 	    }
-	    
+	@RequestMapping(method = { RequestMethod.POST }, value = { "/undoTimeslot" })
+	public List<TimeslotBean> undoTimeslot(@RequestBody final TimeslotBean timeslotBean) throws SQLException {
+		return (List<TimeslotBean>)this.timeslotDAO.undoTimeslot(timeslotBean);
+	}
 
 
 }

@@ -1,18 +1,46 @@
 package com.example.timetable.app.login;
 
+import com.example.timetable.app.exceptions.UserValidation;
+
+import javax.validation.constraints.*;
+
+
 public class LoginBean {
+
 private int loginId, loginRankId;
-private String loginName, loginPassword;
+
+	@NotNull(message = "username shouldn't be null")
+	@NotBlank(message = "user must noy be blank")
+	@UserValidation
+private String loginName;
+//	@Pattern(regexp = "^\\d{10}$",message = "invalid mobile number entered ")
+//	@Min(18)
+//	@Max(60)
+	private String loginPassword;
+
+	public String getRankStatus() {
+		return rankStatus;
+	}
+
+	public void setRankStatus(String rankStatus) {
+		this.rankStatus = rankStatus;
+	}
+
+	private String rankStatus;
+
+
+
 public LoginBean() {
 	super();
 	// TODO Auto-generated constructor stub
 }
-public LoginBean(int loginId, int loginRankId, String loginName, String loginPassword) {
+public LoginBean(int loginId, int loginRankId, String loginName, String loginPassword, String rankStatus) {
 	super();
 	this.loginId = loginId;
 	this.loginRankId = loginRankId;
 	this.loginName = loginName;
 	this.loginPassword = loginPassword;
+	this.rankStatus = rankStatus;
 }
 public int getLoginId() {
 	return loginId;
@@ -38,5 +66,7 @@ public String getLoginPassword() {
 public void setLoginPassword(String loginPassword) {
 	this.loginPassword = loginPassword;
 }
+
+
 
 }

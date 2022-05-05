@@ -3,6 +3,7 @@ package com.example.timetable.app.semester;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.example.timetable.app.semester.SemesterBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +38,11 @@ public class SemesterController {
 	    public List<SemesterBean> deleteSemester(@RequestBody final SemesterBean semesterBean) throws SQLException {
 	        return (List<SemesterBean>)this.semesterDAO.deleteSemester(semesterBean);
 	    }
+
+	@RequestMapping(method = { RequestMethod.POST }, value = { "/undoSemester" })
+	public List<SemesterBean> undoSemester(@RequestBody final SemesterBean semesterBean) throws SQLException {
+		return (List<SemesterBean>)this.semesterDAO.undoSemester(semesterBean);
+	}
 	    
 
 }

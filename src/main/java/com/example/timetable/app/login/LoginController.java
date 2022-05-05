@@ -4,11 +4,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 
 
 @RestController
@@ -24,7 +22,7 @@ public class LoginController {
 	    }
 	    
 	    @RequestMapping(method = { RequestMethod.POST }, value = { "/createLogin" })
-	    public List<LoginBean> createLogin(@RequestBody final LoginBean loginBean) throws SQLException {
+	    public List<LoginBean> createLogin(@Valid @RequestBody final LoginBean loginBean) throws SQLException {
 	        return (List<LoginBean>)this.loginDAO.createLogin(loginBean);
 	    }
 	    @RequestMapping(method = { RequestMethod.POST }, value = { "/updateLogin" })
@@ -33,9 +31,14 @@ public class LoginController {
 	    }
 	    
 	    @RequestMapping(method = { RequestMethod.POST }, value = { "/deleteLogin" })
-	    public List<LoginBean> deleteLogin(@RequestBody final LoginBean loginBean) throws SQLException {
+	    public List<LoginBean> deleteLogin(@Valid @RequestBody final LoginBean loginBean) throws SQLException {
 	        return (List<LoginBean>)this.loginDAO.deleteLogin(loginBean);
 	    }
+
+	@RequestMapping(method = { RequestMethod.GET }, value = { "/findByName" })
+	public LoginBean findByName(@RequestParam String loginName) throws SQLException {
+		return this.loginDAO.findByName(loginName);
+	}
 	    
 
 }

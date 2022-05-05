@@ -55,7 +55,7 @@ public class PlannerDAO {
 	    
 		
 		 public List<PlannerBean> fetchAllPlanners() throws SQLException {
-		        final String selectSQL = "SELECT planner_id,planner_semester_id,planner_unit_id	 FROM planner where not planner_status_id = 2";
+		        final String selectSQL = "SELECT planner_id,planner_semester_id,planner_unit_id,semester_name,unit_name	 FROM planner,semester,unit  where not planner_status_id = 2 and planner_semester_id= semester_id and planner_unit_id = unit_id";
 		        final List<PlannerBean> plannerList = new ArrayList<PlannerBean>();
 		        try {
 		            this.conn = this.dataSource.getConnection();
@@ -64,7 +64,8 @@ public class PlannerDAO {
 		            while (rs.next()) {
 		                final PlannerBean planner = new PlannerBean();
 		                planner.setPlannerId(rs.getInt("planner_id"));
-		                
+						planner.setSemesterName(rs.getString("semester_name"));
+						planner.setUnitName(rs.getString("unit_name"));
 		                planner.setPlannerSemesterId(rs.getInt("planner_semester_id"));
 		                planner.setPlannerUnitId(rs.getInt("planner_unit_id"));
 		               

@@ -2,7 +2,29 @@ package com.example.timetable.app.room;
 
 public class RoomBean {
 private int roomId,roomDepartmentId,roomBuildingId;
-private String roomName, roomDesc,roomCapacity, roomLab;
+private String roomName;
+	private String roomDesc;
+	private String roomCapacity;
+	private String roomLab;
+
+	public String getDepartmentName() {
+		return departmentName;
+	}
+
+	public void setDepartmentName(String departmentName) {
+		this.departmentName = departmentName;
+	}
+
+	public String getBuildingName() {
+		return buildingName;
+	}
+
+	public void setBuildingName(String buildingName) {
+		this.buildingName = buildingName;
+	}
+
+	private String departmentName;
+	private String buildingName;
 public RoomBean() {
 	super();
 	// TODO Auto-generated constructor stub
@@ -13,7 +35,7 @@ public RoomBean() {
 	}
 
 	public RoomBean(int roomId, int roomDepartmentId, int roomBuildingId, String roomDesc, String name, String roomCapacity,
-					String roomLab) {
+					String roomLab, String departmentName, String buildingName) {
 	super();
 	this.roomId = roomId;
 	this.roomDepartmentId = roomDepartmentId;
@@ -22,7 +44,9 @@ public RoomBean() {
 	this.roomCapacity = roomCapacity;
 	this.roomLab = roomLab;
 	this.roomName = name;
-}
+		this.departmentName = departmentName;
+		this.buildingName = buildingName;
+	}
 public int getRoomId() {
 	return roomId;
 }

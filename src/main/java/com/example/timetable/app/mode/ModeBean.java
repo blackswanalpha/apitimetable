@@ -7,6 +7,11 @@ public class ModeBean {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+
+	public ModeBean(int modeId) {
+		this.modeId = modeId;
+	}
+
 	public ModeBean(int modeId, String modeName, String modeDesc) {
 		super();
 		this.modeId = modeId;

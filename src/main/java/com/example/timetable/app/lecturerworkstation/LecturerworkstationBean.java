@@ -16,6 +16,10 @@ public class LecturerworkstationBean {
 		// TODO Auto-generated constructor stub
 	}
 
+	public LecturerworkstationBean(int lecturerworkstationId) {
+		this.lecturerworkstationId = lecturerworkstationId;
+	}
+
 	public int getLecturerworkstationId() {
 		return lecturerworkstationId;
 	}

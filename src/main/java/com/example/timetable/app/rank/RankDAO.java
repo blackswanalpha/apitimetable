@@ -63,8 +63,8 @@ public class RankDAO {
 		            final ResultSet rs = this.cst.executeQuery();
 		            while (rs.next()) {
 		                final RankBean user = new RankBean();
-		                user.setrank_id(rs.getLong("rank_id"));
-		                user.setrank_status(rs.getString("rank_status"));
+		                user.setRankId(rs.getInt("rank_id"));
+		                user.setRankStatus(rs.getString("rank_status"));
 		               
 		                userList.add(user);
 		            }
@@ -80,7 +80,7 @@ public class RankDAO {
 		        return userList;
 		    }
 		    public List<RankBean> createUser(final RankBean userBean) throws SQLException {
-		        final String selectSQL = "INSERT INTO rank (rank_id, rank_status) values(" + this.getNextPrimaryKey() + ", '" + userBean.getrank_status() +  "');";
+		        final String selectSQL = "INSERT INTO rank (rank_id, rank_status) values(" + this.getNextPrimaryKey() + ", '" + userBean.getRankStatus() +  "');";
 		        List<RankBean> userList = new ArrayList<RankBean>();
 		        try {
 		            this.conn = this.dataSource.getConnection();
@@ -99,7 +99,7 @@ public class RankDAO {
 		    }
 		    
 		    public List<RankBean> updateGroup(final RankBean groupBean) throws SQLException {
-		        final String sql = "update rank set rank_status='" + groupBean.getrank_status() + "'" + " where rank_id=" + groupBean.getrank_id();
+		        final String sql = "update rank set rank_status='" + groupBean.getRankStatus() + "'" + " where rank_id=" + groupBean.getRankId();
 		        System.out.println(sql);
 		        try {
 		            this.conn = this.dataSource.getConnection();
@@ -117,7 +117,7 @@ public class RankDAO {
 		    }
 		    
 		    public List<RankBean> deleteGroup(final RankBean groupBean) throws SQLException {
-		        final String sql = "DELETE FROM rank WHERE rank_id=" + groupBean.getrank_id();
+		        final String sql = "DELETE FROM rank WHERE rank_id=" + groupBean.getRankId();
 		        try {
 		            this.conn = this.dataSource.getConnection();
 		            (this.cst = this.conn.prepareStatement(sql)).execute();

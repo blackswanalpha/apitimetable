@@ -10,6 +10,8 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 
@@ -22,6 +24,10 @@ public class LoginDAO {
 	    Connection conn;
 	    @Autowired
 	    DataSource dataSource;
+
+
+		@Autowired
+	PasswordEncoder passwordEncoder;
 		public LoginDAO() {
 			super();
 			  this.cst = null;
@@ -57,7 +63,9 @@ public class LoginDAO {
 	    
 		
 		 public List<LoginBean> fetchAllLogins() throws SQLException {
-		        final String selectSQL = "SELECT login_id,login_username,login_password,login_rank_id	 FROM login";
+
+
+		        final String selectSQL = "SELECT login_id,login_username,login_password,login_rank_id ,rank_status	 FROM login,rank ";
 		        final List<LoginBean> loginList = new ArrayList<LoginBean>();
 		        try {
 		            this.conn = this.dataSource.getConnection();
@@ -69,8 +77,9 @@ public class LoginDAO {
 		                
 		                login.setLoginName(rs.getString("login_username"));
 		                login.setLoginPassword(rs.getString("login_password"));
-		               
-		                login.setLoginRankId(rs.getInt("login_rank_id"));
+						login.setRankStatus(rs.getString("rank_status"));
+
+						login.setLoginRankId(rs.getInt("login_rank_id"));
 		                
 		               
 		                loginList.add(login);
@@ -86,26 +95,90 @@ public class LoginDAO {
 		        this.conn.close();
 		        return loginList;
 		    }
-		    public List<LoginBean> createLogin(final LoginBean loginBean) throws SQLException {
-		        final String selectSQL = "INSERT INTO login(login_id,login_username,login_password,login_rank_id) values(" + this.getNextPrimaryKey() + ", '" +  loginBean.getLoginName() +  "', '" + loginBean.getLoginPassword() +  "', "  + loginBean.getLoginRankId() +  ");";
-		        List<LoginBean> loginList = new ArrayList<LoginBean>();
-		        try {
-		            this.conn = this.dataSource.getConnection();
-		            (this.cst = this.conn.prepareStatement(selectSQL)).execute();
-		        }
-		        catch (Exception e) {
-		            e.printStackTrace();
-		            return (List<LoginBean>)this.fetchAllLogins();
-		        }
-		        finally {
-		            this.conn.close();
-		        }
-		        this.conn.close();
-		        loginList = (List<LoginBean>)this.fetchAllLogins();
-		        return loginList;
-		    }
+
+public Boolean checkExistByName(String name) throws SQLException {
+			LoginBean sist= findByName(name);
+	System.out.println("error");
+	System.out.println(sist == null);
+	System.out.println(sist.getLoginName());
+			if (sist.getLoginName() == null){return  false;}
+
+
+	return true;
+}
+
+	public LoginBean findByName(String loginName) throws SQLException {
+
+		final String selectSQL = "SELECT login_id,login_username,login_password,login_rank_id,rank_status	 FROM login,rank  where login_username = '" + loginName+"' and login_rank_id = rank_id   ";
+//		final List<LoginBean> loginList = new ArrayList<LoginBean>();
+		final LoginBean login = new LoginBean();
+	//	if (login.getLoginName() ==null){throw  new RuntimeException("no user returned null");}
+	ResultSet rs = null;
+		try {
+			this.conn = this.dataSource.getConnection();
+			this.cst = this.conn.prepareStatement(selectSQL, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+			rs = this.cst.executeQuery();
+
+			rs.last();
+			System.out.println("Size is " + rs.getRow());
+
+		rs.first();
+
+	login.setLoginId(rs.getInt("login_id"));
+
+	login.setLoginName(rs.getString("login_username"));
+	login.setLoginPassword(rs.getString("login_password"));
+	login.setRankStatus(rs.getString("rank_status"));
+
+	login.setLoginRankId(rs.getInt("login_rank_id"));
+
+
+
+//				loginList.add(login);
+
+			rs.close();
+
+
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return login;
+		}
+		finally {
+			rs.close();
+			cst.close();
+			this.conn.close();
+		}
+		this.conn.close();
+		return login;
+	}
+
+
+		    public List<LoginBean> createLogin(LoginBean loginBean) throws SQLException {
+
+
+
+					 loginBean.setLoginPassword(passwordEncoder.encode(loginBean.getLoginPassword()));
+					 final String selectSQL = "INSERT INTO login(login_id,login_username,login_password,login_rank_id) values(" + this.getNextPrimaryKey() + ", '" + loginBean.getLoginName() + "', '" + loginBean.getLoginPassword() + "', " + loginBean.getLoginRankId() + ");";
+					 List<LoginBean> loginList = new ArrayList<LoginBean>();
+					 try {
+						 this.conn = this.dataSource.getConnection();
+						 (this.cst = this.conn.prepareStatement(selectSQL)).execute();
+					 } catch (Exception e) {
+						 e.printStackTrace();
+						 return (List<LoginBean>) this.fetchAllLogins();
+					 } finally {
+						 this.conn.close();
+					 }
+					 this.conn.close();
+					 loginList = (List<LoginBean>) this.fetchAllLogins();
+					 return loginList;
+				 }
+
 		    
 		    public List<LoginBean> updateLogin(final LoginBean loginBean) throws SQLException {
+
+
 		        final String sql = "update login set login_username='" + loginBean.getLoginName() +"',  login_password='" + loginBean.getLoginPassword()+"',  login_rank_id=" + loginBean.getLoginRankId()   + " where login_id=" + loginBean.getLoginId();
 		        System.out.println(sql);
 		        try {

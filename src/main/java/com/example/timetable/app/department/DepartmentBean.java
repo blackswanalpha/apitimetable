@@ -4,7 +4,19 @@ public class DepartmentBean {
 	
 	
 	private int departmentId,departmentMobile,departmentFacultyId;
-	private String departmentName,departmentDesc,departmentEmail;
+	private String departmentName;
+	private String departmentDesc;
+	private String departmentEmail;
+
+	public String getFacultyName() {
+		return facultyName;
+	}
+
+	public void setFacultyName(String facultyName) {
+		this.facultyName = facultyName;
+	}
+
+	private String facultyName;
 	public DepartmentBean() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -15,7 +27,7 @@ public class DepartmentBean {
 	}
 
 	public DepartmentBean(int departmentId, int departmentMobile, int departmentFacultyId, String departmentName,
-						  String departmentDesc, String departmentEmail) {
+						  String departmentDesc, String departmentEmail, String facultyName) {
 		super();
 		this.departmentId = departmentId;
 		this.departmentMobile = departmentMobile;
@@ -23,7 +35,9 @@ public class DepartmentBean {
 		this.departmentName = departmentName;
 		this.departmentDesc = departmentDesc;
 		this.departmentEmail = departmentEmail;
+		this.facultyName = facultyName;
 	}
+
 	public int getDepartmentId() {
 		return departmentId;
 	}
